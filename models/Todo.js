@@ -4,10 +4,10 @@ const uuid = require("uuid");
 const TodoSchema = mongoose.Schema({
   id: {
     type: String,
-    default: uuid.v4(),
+    default: ()=>uuid.v4(),
   },
   order: Number,
-  description: String,
+  desc: String,
   isCompleted: {
     type: Boolean,
     default: false,

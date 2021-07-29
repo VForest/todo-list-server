@@ -5,13 +5,13 @@ const Todo = require("../models/Todo");
 //Post a new todo
 router.post("/", async (req, res) => {
   const post = new Todo({
-    description: req.body.description,
+    desc: req.body.desc,
     order: req.body.order,
   });
 
   try {
     const savedPost = await post.save();
-    res.json(savedPost);
+    res.status(201).json(savedPost);
   } catch {
     (err) => res.json(err);
   }
@@ -41,7 +41,7 @@ router.get("/:todoId", async (req, res) => {
 router.delete("/:todoId", async (req, res) => {
   try {
     const todo = await Todo.deleteOne({ id: req.params.todoId }).exec();
-    res.json(todo);
+    res.status(200).send();
   } catch (err) {
     res.json(err);
   }
@@ -50,16 +50,16 @@ router.delete("/:todoId", async (req, res) => {
 //Patch a todo
 router.patch("/:todoId", async (req, res) => {
   try {
-    const todo = await Todo.updateOne(
+    await Todo.updateOne(
       { id: req.params.todoId },
       {
-        description: req.body.description,
+        desc: req.body.desc,
         order: req.body.order,
         isCompleted: req.body.isCompleted,
       },
       { omitUndefined: true }
     ).exec();
-    res.json(todo);
+    res.status(200).send();
   } catch (err) {
     res.json(err);
   }
