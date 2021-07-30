@@ -6,20 +6,15 @@ Todo.exists;
 
 //Post a new todo
 router.post("/", async (req, res) => {
-  if (await Todo.exists({ order: req.body.order })) {
-    res.status(409).send("Duplicated order");
-  } else {
-    const post = new Todo({
-      desc: req.body.desc,
-      order: req.body.order,
-    });
+  const post = new Todo({
+    desc: req.body.desc,
+  });
 
-    try {
-      const savedPost = await post.save();
-      res.status(201).json(savedPost);
-    } catch {
-      (err) => res.json(err);
-    }
+  try {
+    const savedPost = await post.save();
+    res.status(201).json(savedPost);
+  } catch {
+    (err) => res.json(err);
   }
 });
 
@@ -69,7 +64,6 @@ router.patch("/:todoId", async (req, res) => {
         { id: req.params.todoId },
         {
           desc: req.body.desc,
-          order: req.body.order,
           isCompleted: req.body.isCompleted,
         },
         { omitUndefined: true }

@@ -6,7 +6,6 @@ const TodoSchema = mongoose.Schema({
     type: String,
     default: ()=>uuid.v4(),
   },
-  order: Number,
   desc: String,
   isCompleted: {
     type: Boolean,
